@@ -2,7 +2,7 @@
 * @author Hamdi Allam hamdi.allam97@gmail.com
 * Please reach out with any questions or concerns
 */
-pragma solidity ^0.4.24;
+pragma solidity ^0.8.20;
 
 library RLP {
     uint8 constant STRING_SHORT_START = 0x80;
@@ -139,7 +139,7 @@ library RLP {
     /** RLPItem conversions into data types **/
 
     // @returns raw rlp encoding in bytes
-    function toRLPBytes(RLPItem memory item) internal pure returns (bytes) {
+    function toRLPBytes(RLPItem memory item) internal pure returns ( bytes memory) {
         bytes memory result = new bytes(item.len);
 
         uint ptr;
@@ -166,7 +166,7 @@ library RLP {
         // 1 byte for the length prefix according to RLP spec
         require(item.len <= 21, "Invalid RLPItem. Addresses are encoded in 20 bytes or less");
 
-        return address(toUint(item));
+        return address(uint160(toUint(item)));
     }
 
     function toUint(RLPItem memory item) internal pure returns (uint) {
@@ -182,7 +182,7 @@ library RLP {
         return result;
     }
 
-    function toBytes(RLPItem memory item) internal pure returns (bytes) {
+    function toBytes(RLPItem memory item) internal pure returns ( bytes memory) {
         uint offset = _payloadOffset(item.memPtr);
         uint len = item.len - offset; // data length
         bytes memory result = new bytes(len);

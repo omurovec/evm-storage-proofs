@@ -1,7 +1,6 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.8.20;
 
 import "./lib/TrieProofs.sol";
-
 
 contract StorageOracle {
     using TrieProofs for bytes;

@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.8.20;
 
 import "./RLP.sol";
 
@@ -135,8 +135,8 @@ library TrieProofs {
     */
     function extractNibble(bytes32 path, uint256 position) internal pure returns (uint8 nibble) {
         require(position < 64, "Invalid nibble position");
-        byte shifted = position == 0 ? byte(path >> 4) : byte(path << ((position - 1) * 4));
-        return uint8(byte(shifted & 0xF));
+        bytes1 shifted = position == 0 ? bytes1(path >> 4) : bytes1(path << ((position - 1) * 4));
+        return uint8(bytes1(shifted & bytes1(uint8(0xf))));
     }
 
     function decodeNibbles(bytes memory compact, uint skipNibbles) internal pure returns (bytes memory nibbles) {
